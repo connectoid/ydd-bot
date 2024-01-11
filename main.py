@@ -25,6 +25,8 @@ def download_file(url):
     # Получаем загрузочную ссылку
     final_url = BASE_URL + urlencode(dict(public_key=url))
     response = requests.get(final_url)
+    print(response)
+    print(response.json())
     if response.status_code == 200:
         print(response.json())
         filesize = response.json()['href'].split('fsize=')[1].split('&')[0]
