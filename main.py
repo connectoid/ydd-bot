@@ -22,7 +22,6 @@ ERRORS = ['WRONG LINK', 'CANT DOWNLOAD', 'FILE IS TOO BIG']
 MAX_FILE_SIZE = 52428800
 
 def download_file(url):
-    # Получаем загрузочную ссылку
     final_url = BASE_URL + urlencode(dict(public_key=url))
     response = requests.get(final_url)
     print(response)
@@ -36,8 +35,6 @@ def download_file(url):
             filename = unquote(filename)
             print(filename)
             download_url = response.json()['href']
-
-            # Загружаем файл и сохраняем его
             download_response = requests.get(download_url)
             if download_response.status_code == 200:
                 print(download_response)
@@ -61,7 +58,6 @@ async def proccess_start_command(message: Message):
     
 @dp.message()
 async def send_echo(message: Message):
-    # await message.reply(message.text)
     filename = download_file(message.text)
     if filename not in ERRORS:
         await message.reply(f'Файл {filename} готов к скачиванию, ожидайте')
